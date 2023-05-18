@@ -1,204 +1,202 @@
 <template>
   <div>
-    <h3>学生信息填写</h3>
-    <div>
-      <label for="summary"><h3>1.个人学年总结：</h3></label>
-      <textarea id="summary" v-model="summary" placeholder="请输入个人学年总结,字数不超过400字" rows="5" cols="50"></textarea>
-    </div>
+    <el-card>
+      <h3 class="card-title">学生信息填写</h3>
+      <el-form :model="form" label-position="top">
+        <el-form-item label="1. 个人学年总结">
+          <el-input
+            type="textarea"
+            v-model="form.summary"
+            placeholder="请输入个人学年总结，字数不超过400字"
+            :rows="5"
+            :autosize="{ minRows: 5, maxRows: 5 }"
+          ></el-input>
+        </el-form-item>
 
-    <div>
-      <label for="score"><h3>2.成绩：</h3></label>
-      <input id="score" type="number" v-model.number="score" placeholder="请输入你的GPA">
-    </div>
+        <el-form-item label="2. 成绩(GPA)">
+          <el-input-number v-model="form.score" :step="0.01" :precision="2" placeholder="请输入你的GPA"></el-input-number>
+        </el-form-item>
 
-    <div>
-      <h3>3.科研情况：（请点击添加进行填写）</h3>
-      <table>
-        <thead>
-          <tr>
-            <th class="custom-font">名次</th>
-            <th class="custom-font">时间</th>
-            <th class="custom-font">地点</th>
-            <th class="custom-font">奖项</th>
-            <th class="custom-font">级别</th>
-            <th >
-              <button @click="addResearchItem">添加</button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(researchItem, index) in researchItems" :key="index">
-            <td>
-              <input type="text" v-model="researchItem.rank">
-            </td>
-            <td>
-              <input type="text" v-model="researchItem.time">
-            </td>
-            <td>
-              <input type="text" v-model="researchItem.location">
-            </td>
-            <td>
-              <input type="text" v-model="researchItem.award">
-            </td>
-            <td>
-              <input type="text" v-model="researchItem.level">
-            </td>
-            <td>
-              <button @click="removeResearchItem(index)">删除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <el-form-item label="3. 科研情况">
+          <el-table :data="form.researchItems" style="width: 100%">
+            <el-table-column prop="rank" label="名次">
+              <template #default="scope">
+                <el-input v-model="scope.row.rank"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="time" label="时间">
+              <template #default="scope">
+                <el-input v-model="scope.row.time"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="location" label="地点">
+              <template #default="scope">
+                <el-input v-model="scope.row.location"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="award" label="奖项">
+              <template #default="scope">
+                <el-input v-model="scope.row.award"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="level" label="级别">
+              <template #default="scope">
+                <el-input v-model="scope.row.level"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column>
+              <template #default="scope">
+                <el-button type="text" @click="removeResearchItem(scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-button @click="addResearchItem">添加</el-button>
+        </el-form-item>
 
-    <div>
-      <h3>4.学生骨干服务岗位：（请点击添加进行填写）</h3>
-      <table>
-        <thead>
-          <tr>
-            <th class="custom-font">起始时间</th>
-            <th class="custom-font">服务岗位名称</th>
-            <th class="custom-font">职务</th>
-            <th class="custom-font">考核级别</th>
-            <th>
-              <button @click="addServiceItem">添加</button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(serviceItem, index) in serviceItems" :key="index">
-            <td>
-              <input type="text" v-model="serviceItem.startDate">
-            </td>
-            <td>
-              <input type="text" v-model="serviceItem.positionName">
-            </td>
-            <td>
-              <input type="text" v-model="serviceItem.role">
-            </td>
-            <td>
-              <input type="text" v-model="serviceItem.assessmentLevel">
-            </td>
-            <td>
-              <button @click="removeServiceItem(index)">删除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <el-form-item label="4. 学生骨干服务岗位">
+          <el-table :data="form.serviceItems" style="width: 100%">
+            <el-table-column prop="startDate" label="起始时间">
+              <template #default="scope">
+                <el-input v-model="scope.row.startDate"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="positionName" label="服务岗位名称">
+              <template #default="scope">
+                <el-input v-model="scope.row.positionName"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="role" label="职务">
+              <template #default="scope">
+                <el-input v-model="scope.row.role"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="assessmentLevel" label="考核级别">
+              <template #default="scope">
+                <el-input v-model="scope.row.assessmentLevel"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column>
+              <template #default="scope">
+                <el-button type="text" @click="removeServiceItem(scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-button @click="addServiceItem">添加</el-button>
+        </el-form-item>
 
-    <div>
-      <h3>5.社会实践情况：（请点击添加进行填写）</h3>
-      <table>
-        <thead>
-          <tr>
-            <th class="custom-font">发起单位</th>
-            <th class="custom-font">地点</th>
-            <th class="custom-font">天数</th>
-            <th class="custom-font">团队人数</th>
-            <th class="custom-font">团内职务</th>
-            <th class="custom-font">是否线上</th>
-            <th class="custom-font">是否获得奖励</th>
-            <th class="custom-font">奖励名称</th>
-            <th>
-              <button @click="addPracticeItem">添加</button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(practiceItem, index) in practiceItems" :key="index">
-            <td>
-              <input type="text" v-model="practiceItem.initiatingUnit">
-            </td>
-            <td>
-              <input type="text" v-model="practiceItem.location">
-            </td>
-            <td>
-              <input type="number" v-model.number="practiceItem.duration">
-            </td>
-            <td>
-              <input type="number" v-model.number="practiceItem.teamSize">
-            </td>
-            <td>
-              <input type="text" v-model="practiceItem.teamRole">
-            </td>
-            <td>
-              <input type="checkbox" v-model="practiceItem.online">
-            </td>
-            <td>
-              <input type="checkbox" v-model="practiceItem.rewarded">
-            </td>
-            <td>
-              <input type="text" v-model="practiceItem.rewardName">
-            </td>
-            <td>
-              <button @click="removePracticeItem(index)">删除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <el-form-item label="5. 社会实践情况">
+          <el-table :data="form.practiceItems" style="width: 100%">
+            <el-table-column prop="initiatingUnit" label="发起单位">
+              <template #default="scope">
+                <el-input v-model="scope.row.initiatingUnit"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="location" label="地点">
+              <template #default="scope">
+                <el-input v-model="scope.row.location"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="duration" label="天数">
+              <template #default="scope">
+                <el-input-number v-model="scope.row.duration" :step="1" :precision="0"></el-input-number>
+              </template>
+            </el-table-column>
+            <el-table-column prop="teamSize" label="团队人数">
+              <template #default="scope">
+                <el-input-number v-model="scope.row.teamSize" :step="1" :precision="0"></el-input-number>
+              </template>
+            </el-table-column>
+            <el-table-column prop="teamRole" label="团内职务">
+              <template #default="scope">
+                <el-input v-model="scope.row.teamRole"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="online" label="是否线上">
+              <template #default="scope">
+                <el-checkbox v-model="scope.row.online"></el-checkbox>
+              </template>
+            </el-table-column>
+            <el-table-column prop="rewarded" label="是否获得奖励">
+              <template #default="scope">
+                <el-checkbox v-model="scope.row.rewarded"></el-checkbox>
+              </template>
+            </el-table-column>
+            <el-table-column prop="rewardName" label="奖励名称">
+              <template #default="scope">
+                <el-input v-model="scope.row.rewardName"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column>
+              <template #default="scope">
+                <el-button type="text" @click="removePracticeItem(scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-button @click="addPracticeItem">添加</el-button>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm">提交</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
-<script >
+
+<script>
+import { onlineFillingSubmit } from '/src/api/submit.js'
 export default {
   data() {
     return {
-      summary: '',
-      score: null,
-      researchItems: [],
-      serviceItems: [],
-      practiceItems: []
+      form: {
+        summary: '',
+        score: null,
+        researchItems: [],
+        serviceItems: [],
+        practiceItems: []
+      }
     };
   },
   methods: {
     addResearchItem() {
-      this.researchItems.push({
-        rank: '',
-        time: '',
-        location: '',
-        award: '',
-        level: ''
-      });
+      this.form.researchItems.push({});
     },
     removeResearchItem(index) {
-      this.researchItems.splice(index, 1);
+      this.form.researchItems.splice(index, 1);
     },
     addServiceItem() {
-      this.serviceItems.push({
-        startDate: '',
-        positionName: '',
-        role: '',
-        assessmentLevel: ''
-      });
+      this.form.serviceItems.push({});
     },
     removeServiceItem(index) {
-      this.serviceItems.splice(index, 1);
+      this.form.serviceItems.splice(index, 1);
     },
     addPracticeItem() {
-      this.practiceItems.push({
-        initiatingUnit: '',
-        location: '',
-        duration: null,
-        teamSize: null,
-        teamRole: '',
-        online: false,
-        rewarded: false,
-        rewardName: ''
-      });
+      this.form.practiceItems.push({});
     },
     removePracticeItem(index) {
-      this.practiceItems.splice(index, 1);
+      this.form.practiceItems.splice(index, 1);
+    },
+    submitForm() {
+      // 处理表单提交逻辑
+      // 执行表单提交
+      onlineFillingSubmit(form.value)
+        .then(response => {
+          ElMessage.success('提交成功');
+          // 其他成功处理逻辑
+        })
+        .catch(error => {
+          ElMessage.error('提交失败');
+          // 其他失败处理逻辑
+        });
     }
   }
 };
 </script>
-<style>
-.custom-font {
-  font-size: 16px;
-  color: black;
-  font-weight: normal;
-  /* 可以添加其他字体样式属性 */
-}
 
+<style scoped>
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 </style>

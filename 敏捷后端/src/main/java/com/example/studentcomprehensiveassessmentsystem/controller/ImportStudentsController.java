@@ -4,6 +4,7 @@ package com.example.studentcomprehensiveassessmentsystem.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.example.studentcomprehensiveassessmentsystem.common.CommonResult;
 import com.example.studentcomprehensiveassessmentsystem.controller.VO.importStudentsVO;
 import com.example.studentcomprehensiveassessmentsystem.mapper.DO.importStudentsDO;
 import com.example.studentcomprehensiveassessmentsystem.service.importStudentsService;
@@ -27,7 +28,7 @@ public class ImportStudentsController {
     private importStudentsService ImportStudentsService;
 
     @PostMapping("/importStudents")
-    public void importStudents(@RequestParam("file") MultipartFile file) throws IOException {
+    public CommonResult<String> importStudents(@RequestParam("file") MultipartFile file) throws IOException {
         List<importStudentsVO> studentsList = new ArrayList<>();
 
         // 使用 EasyExcel 读取 Excel 文件
@@ -44,6 +45,7 @@ public class ImportStudentsController {
                 processStudentsList(studentsList);
             }
         }).sheet().doRead();
+        return  CommonResult.success("Successful Import");
     }
 
     private void processStudentsList(List<importStudentsVO> studentsList) {

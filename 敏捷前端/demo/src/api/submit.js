@@ -11,7 +11,7 @@ import request from '/src/utils/request'
 //     data: data
 //   })
 // }
-export function submit(file) {
+export function importStudentsSubmit(file) {
   return request({
     url: '/importStudents',
     method: 'post',
@@ -21,5 +21,14 @@ export function submit(file) {
     }
   });
 }
-
+export function onlineFillingSubmit(form){
+  return request({
+    url: '/onlineFilling',
+    method: 'post',
+    data: form,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
 
