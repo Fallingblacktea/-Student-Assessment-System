@@ -18,18 +18,9 @@
   >
     <div class="demo">
       <div class="container">
-        <h1>
-          学生评优管理项目
-          <!-- <a
-            style="color: #000;text-transform: uppercase;font-size: 14px;font-weight: 400;"
-            href="https://github.com/yaminncco/vue-sidebar-menu"
-          >
-            Github
-          </a> -->
-        </h1>
-        
+        <h2>北京大学学生评奖系统</h2>
         <div>
-          选择主题:
+          请选择主题：
           <select v-model="selectedTheme">
             <option
               v-for="(theme, index) in themes"
@@ -40,7 +31,7 @@
             </option>
           </select>
         </div>
-        <hr style="margin: 50px 0px;border: 1px solid #e3e3e3;">
+        <hr style="margin: 10px 0px;border: 1px solid #e3e3e3;">
         <router-view />
       </div>
     </div>
@@ -228,6 +219,8 @@ export default {
     window.addEventListener('resize', this.onResize)
   },
   methods: {
+
+     
     onToggleCollapse (collapsed) {
       console.log('onToggleCollapse')
     },
@@ -288,7 +281,8 @@ body {
 }
 
 .demo {
-  padding: 50px;
+  padding-top: -10px;
+  padding-left: 20px;
 }
 
 .container {
