@@ -28,19 +28,37 @@
 
   
   <script>
+   import { getSPdata } from '/src/api.getTableData.js'
   export default {
     data() {
-      return {
-        tableData: [
-          { index: 1, studentId: '001', name: 'John', status: '未完成' },
-          { index: 2, studentId: '002', name: 'Jane', status: '已完成' },
-          // 其他数据项...
-        ],
-        currentPage: 1,
-        pageSize: 10
-      };
-    },
+    return {
+      tableData: [],
+      currentPage: 1,
+      pageSize: 10,
+      counter: 1, // 自增的序号起始值
+    };
+  },
+  mounted() {
+    this.fetchData();
+  },
     methods: {
+      fetchData() {
+      // 调用后端接口获取数据
+      getPSdata()
+    .then((response) => {
+      const resultData = response.data; // 获取commonResult的data部分
+      this.tableData = resultData.map((item, index) => ({
+        index: index + 1, // 自增的序号
+        studentId: item.studentId,
+        name: item.name,
+        status: item.socialPractice ? '已测评' : '未测评',
+      }));
+    })
+    .catch((error) => {
+      // 处理错误
+      console.error(error);
+    });
+    },
       goToDetails(studentId) {
         const route = { name: 'socialPracticeDetails', params: { studentId: studentId } };
         
