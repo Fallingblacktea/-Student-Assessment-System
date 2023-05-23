@@ -31,4 +31,69 @@ export function onlineFillingSubmit(form){
     }
   });
 }
-
+export function submitScorePS(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/personalSummary/scores',
+    method: 'post',
+    data: data
+  })
+}
+export function submitScoreRS(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/researchStatus/scores',
+    method: 'post',
+    data: data
+  })
+}
+export function submitScoreSP(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/socialPractice/scores',
+    method: 'post',
+    data: data
+  })
+}
+export function submitScoreSS(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/studentScores/scores',
+    method: 'post',
+    data: data
+  })
+}
+export function submitScoreSV(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/studentService/scores',
+    method: 'post',
+    data: data
+  })
+}
+export function submitScoreVS(score,studentID) {
+  const data = {
+    score:score,
+    studentID:studentID
+  }
+  return request({
+    url: '/volunteerService/scores',
+    method: 'post',
+    data: data
+  })
+}

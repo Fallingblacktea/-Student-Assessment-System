@@ -26,29 +26,48 @@
 </template>
 
 <script>
+    import { getSPID } from '/src/api/getIndividualInfo.js'
+    import { submitScoreSP as submitScoreToBackend } from '/src/api/submit.js';
+
 export default {
   data() {
     return {
       tableData: [
         {
-          name: 'John',
-          studentID: '12345',
-          organization: '某单位',
-          location: '某地',
-          days: 5,
-          teamSize: 10,
-          teamRole: '成员',
-          online: '是',
-          hasAward: '是',
-          awardName: '优秀奖'
+          name: '',
+          studentID: '',
+          organization: '',
+          location: '',
+          days: null,
+          teamSize: null,
+          teamRole: '',
+          online: '',
+          hasAward: '',
+          awardName: ''
         }
       ],
       score: ''
     };
   },
+  mounted() {
+      const studentID = this.$route.params.studentID;
+    this.getStudentInfo(studentID);
+  },
   methods: {
+    getStudentInfo(studentID) {
+      getSPID(studentID).then(response => {
+        this.tableData = response.data;
+      });
+    },
     submitScore() {
-      // 在这里执行提交分数的逻辑
+      submitScoreToBackend(this.score, this.student.id)
+  .then(response => {
+    // 显示消息
+    this.$message.success(response.data.message);
+  })
+  .catch(error => {
+    // 处理错误
+  });  // 在这里执行提交分数的逻辑
       console.log('提交分数:', this.score);
     }
   }

@@ -23,25 +23,45 @@
 </template>
 
 <script>
+    import { getRSID } from '/src/api/getIndividualInfo.js'
+    import { submitScoreRS as submitScoreToBackend } from '/src/api/submit.js';
+
 export default {
   data() {
     return {
       tableData: [
         {
-          name: 'John',
-          studentID: '12345',
-          rank: 1,
-          time: '2022-01-01',
-          location: '某地',
-          award: '优秀奖',
-          level: '省级'
+          name: '',
+          studentID: '',
+          rank: null,
+          time: '',
+          location: '',
+          award: '',
+          level: ''
         }
-      ]
+      ],
+      score:null,
     };
   },
+  mounted() {
+      const studentID = this.$route.params.studentID;
+    this.getStudentInfo(studentID);
+  },
   methods: {
+    getStudentInfo(studentID) {
+      getRSID(studentID).then(response => {
+        this.tableData = response.data;
+      });
+    },
       submitScore() {
-        // 在这里执行提交分数的逻辑
+        submitScoreToBackend(this.score, this.student.id)
+  .then(response => {
+    // 显示消息
+    this.$message.success(response.data.message);
+  })
+  .catch(error => {
+    // 处理错误
+  });
         console.log('提交分数:', this.score);
       },
     },

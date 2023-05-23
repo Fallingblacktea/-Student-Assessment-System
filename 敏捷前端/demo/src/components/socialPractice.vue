@@ -3,12 +3,12 @@
     
     <el-table :data="tableData" style="width: 100%">
       <el-table-column label="序号" prop="index"></el-table-column>
-      <el-table-column label="学号" prop="studentId"></el-table-column>
+      <el-table-column label="学号" prop="studentID"></el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
       <el-table-column label="测评状态" prop="status"></el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button type="primary" @click="goToDetails(scope.row.studentId)">测评</el-button>
+          <el-button type="primary" @click="goToDetails(scope.row.studentID)">测评</el-button>
         </template>
       </el-table-column>
 
@@ -28,7 +28,7 @@
 
   
   <script>
-   import { getSPdata } from '/src/api.getTableData.js'
+   import { getSPdata } from '/src/api/getTableData.js'
   export default {
     data() {
     return {
@@ -44,12 +44,12 @@
     methods: {
       fetchData() {
       // 调用后端接口获取数据
-      getPSdata()
+      getSPdata()
     .then((response) => {
       const resultData = response.data; // 获取commonResult的data部分
       this.tableData = resultData.map((item, index) => ({
         index: index + 1, // 自增的序号
-        studentId: item.studentId,
+        studentID: item.studentID,
         name: item.name,
         status: item.socialPractice ? '已测评' : '未测评',
       }));
@@ -59,8 +59,8 @@
       console.error(error);
     });
     },
-      goToDetails(studentId) {
-        const route = { name: 'socialPracticeDetails', params: { studentId: studentId } };
+      goToDetails(studentID) {
+        const route = { name: 'socialPracticeDetails', params: { studentID: studentID } };
         
         this.$router.push(route);
         console.log("123");
