@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class StudentService {
 
-    private Date startTime;
+    private String startTime;
     private String positionName;
     private String positionTitle;
     private String assessmentLevel;

@@ -2,6 +2,8 @@ package com.example.studentcomprehensiveassessmentsystem.controller.VO.OnlineFil
 
 import lombok.Data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // ResearchStatus
@@ -9,10 +11,9 @@ import java.util.Date;
 public class ResearchStatus {
 
     private int ranking;
-    private Date time;
+    private String time;
     private String location;
     private String award;
     private String level;
 
-    // 省略构造函数、getter和setter方法
 }

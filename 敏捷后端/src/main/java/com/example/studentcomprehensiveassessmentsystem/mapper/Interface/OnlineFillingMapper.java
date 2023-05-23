@@ -4,18 +4,20 @@ package com.example.studentcomprehensiveassessmentsystem.mapper.Interface;
 import com.example.studentcomprehensiveassessmentsystem.mapper.DO.OnlineFilling.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
-@Mapper
+    @Mapper
     public interface OnlineFillingMapper {
-        @Insert("INSERT INTO personalsummary (studentID, personalSummary) VALUES (#{studentId}, #{personalSummary})")
+        @Insert("INSERT INTO personalsummary (studentID, statement) VALUES (#{studentId}, #{personalSummary})")
         void insertPersonalSummary(PersonalSummaryDO personalSummary);
 
 
 
-        @Insert("INSERT INTO studentsinfo (GPA) VALUES ( #{GPA})")
-        void insertStudentScores(StudentScoresDO studentScoresDO);
+    @Update("UPDATE studentsinfo SET GPA = #{GPA} WHERE studentID = #{studentId}")
+    void updateStudentScores(StudentScoresDO studentScoresDO);
 
-        @Insert("INSERT INTO researchstatus (studentID, ranking, time, location, award, level) " +
+
+    @Insert("INSERT INTO researchstatus (studentID, ranking, time, location, award, level) " +
                 "VALUES (#{studentId}, #{ranking}, #{time}, #{location}, #{award}, #{level})")
         void insertResearchStatus(ResearchStatusDO researchStatus);
 

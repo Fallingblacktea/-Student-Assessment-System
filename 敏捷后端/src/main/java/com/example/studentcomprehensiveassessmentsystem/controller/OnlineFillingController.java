@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/onlineFilling")
 public class OnlineFillingController {
@@ -18,7 +20,13 @@ public class OnlineFillingController {
 
 
     @PostMapping
-    public void onlineFilling(@RequestBody OnlineFillingVO request) {
+    public void onlineFilling(@RequestBody OnlineFillingVO request) throws ParseException {
+        System.out.println(request.getStudentID());
+        System.out.println(request.getGPA());
+        System.out.println(request.getResearchStatus());
+        System.out.println(request.getPersonalSummary());
+        System.out.println(request.getStudentService());
+        System.out.println(request.getSocialPractice());
         // 插入个人陈述表
         PersonalSummaryDO personalSummaryDO = new PersonalSummaryDO();
         personalSummaryDO.setStudentId(request.getStudentID());
@@ -32,7 +40,7 @@ public class OnlineFillingController {
         StudentScoresDO studentScoresDO = new StudentScoresDO();
         studentScoresDO.setStudentId(request.getStudentID());
         studentScoresDO.setGPA(request.getGPA());
-        onlineFillingService.createStudentGrades(studentScoresDO);
+        onlineFillingService.createStudentScores(studentScoresDO);
 
         // 插入科研情况表
         for (ResearchStatus researchStatus : request.getResearchStatus()) {

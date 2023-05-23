@@ -1,5 +1,7 @@
 package com.example.studentcomprehensiveassessmentsystem.mapper.DO.OnlineFilling;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // ResearchStatusDO
@@ -14,6 +16,10 @@ public class ResearchStatusDO {
     private String location;
     private String award;
     private String level;
-
+    public void setTime(String time) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        this.time = dateFormat.parse(time);
+    }
+    // 省略构造函数、getter和setter方法
     // 省略构造函数、getter和setter方法
 }

@@ -16,8 +16,8 @@ public class OnlineFillingService {
 
 
 
-    public void createStudentGrades(StudentScoresDO studentGrades) {
-        onlineFillingMapper.insertStudentScores(studentGrades);
+    public void createStudentScores(StudentScoresDO studentGrades) {
+        onlineFillingMapper.updateStudentScores(studentGrades);
     }
 
     public void createResearchStatus(ResearchStatusDO researchStatus) {
