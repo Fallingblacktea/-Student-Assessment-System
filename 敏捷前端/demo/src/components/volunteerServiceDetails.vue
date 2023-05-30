@@ -16,19 +16,38 @@
 </template>
 
 <script>
+    import { getVSID } from '/src/api/getIndividualInfo.js'
+    import { submitScoreVS as submitScoreToBackend } from '/src/api/submit.js';
+
 export default {
   data() {
     return {//后续student要改成数据库里的studentID
       student: {
-        name: '张三',
-        hours: '10小时',
+        name: '',
+        hours: '',
       },
       score: null,
     };
   },
+  mounted() {
+      const studentID = this.$route.params.studentID;
+    this.getStudentInfo(studentID);
+  },
   methods: {
+    getStudentInfo(studentID) {
+      getVSID(studentID).then(response => {
+        this.student = response.data;
+      });
+    },
     submitScore() {
-      // 在这里执行提交分数的逻辑
+      submitScoreToBackend(this.score, this.student.id)
+  .then(response => {
+    // 显示消息
+    this.$message.success(response.data.message);
+  })
+  .catch(error => {
+    // 处理错误
+  });  // 在这里执行提交分数的逻辑
       console.log('提交分数:', this.score);
     },
   },

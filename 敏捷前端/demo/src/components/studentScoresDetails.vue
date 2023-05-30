@@ -5,7 +5,7 @@
 
     <h4>是否正确</h4>
     
-    <el-radio-group v-model="isCorrect">
+    <el-radio-group v-model="present">
       <el-radio label="true">是</el-radio>
       <el-radio label="false">否</el-radio>
     </el-radio-group>
@@ -16,21 +16,39 @@
 </template>
 
 <script>
+    import { getSSID } from '/src/api/getIndividualInfo.js'
+    import { submitScoreSS as submitScoreToBackend } from '/src/api/submit.js';
+
 export default {
   data() {
     return {
       student: {
-        name: 'John',
-        gpa: '3.5',
+        name: '',
+        gpa: '',
       },
-      isCorrect: 'true', // 初始化是否正确的选项
+      present:''
     };
   },
+  mounted() {
+      const studentID = this.$route.params.studentID;
+    this.getStudentInfo(studentID);
+  },
   methods: {
+    getStudentInfo(studentID) {
+      getSSID(studentID).then(response => {
+        this.student = response.data;
+      });
+    },
     submitScore() {
-      // 在这里执行提交分数的逻辑
-      console.log('提交分数:', this.score);
-      console.log('是否正确:', this.isCorrect);
+      submitScoreToBackend(this.present, this.student.id)
+  .then(response => {
+    // 显示消息
+    this.$message.success(response.data.message);
+  })
+  .catch(error => {
+    // 处理错误
+  });  // 在这里执行提交分数的逻辑
+      console.log('是否正确:', this.present);
     },
   },
 };
