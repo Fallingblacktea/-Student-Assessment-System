@@ -14,7 +14,7 @@
         </el-form-item>
 
         <el-form-item label="2. 成绩(GPA)">
-          <el-input-number v-model="form.score" :step="0.01" :precision="2" placeholder="请输入你的GPA"></el-input-number>
+          <el-input-number v-model="form.score" :step="0.01" :precision="2" placeholder="请输入gpa" ></el-input-number>
         </el-form-item>
 
         <el-form-item label="3. 科研情况">

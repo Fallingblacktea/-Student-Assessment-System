@@ -4,9 +4,7 @@ import request from '/src/utils/request'
     return request({
       url: '/personalSummary/details',
       method: 'get',
-      data:{
-        studentID:studentID
-      }
+      data:studentID
     });
   }
   export function getRSID(studentID) {
