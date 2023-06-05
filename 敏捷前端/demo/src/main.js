@@ -31,23 +31,23 @@ createApp(App)
  .component('font-awesome-icon', FontAwesomeIcon)
  .mount('#app')
 
-//  router.beforeEach((to, from, next) => {
-//     if (getAccessToken()) {
-//       if (to.path === '/login'||to.path === '/register') {
-//         next({ path: '/' })
-//       } 
-//       next()
-//     } else {
-//       // 没有token
-//       if (to.path === '/login'||to.path === '/register') {
-//         // 直接进入
-//         next()
-//       } else {
-//         next('/login') // 否则全部重定向到登录页
-//       }
-//     }
-//   })
+ router.beforeEach((to, from, next) => {
+    if (getAccessToken()) {
+      if (to.path === '/login'||to.path === '/register') {
+        next({ path: '/' })
+      } 
+      next()
+    } else {
+      // 没有token
+      if (to.path === '/login'||to.path === '/register') {
+        // 直接进入
+        next()
+      } else {
+        next('/login') // 否则全部重定向到登录页
+      }
+    }
+  })
   
-//   router.afterEach(() => {
+  router.afterEach(() => {
     
-//   })
+  })
