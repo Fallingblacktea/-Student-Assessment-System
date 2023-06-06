@@ -12,7 +12,8 @@ public class importStudentsService {
     private importStudentsMapper ImportStudentsMapper;
 
     public void insertImportStudents(importStudentsDO importStudentsDO) {
-        ImportStudentsMapper.insert(importStudentsDO);
+        ImportStudentsMapper.insertStudentsInfo(importStudentsDO);
+        ImportStudentsMapper.insertUsers(importStudentsDO);
     }
 
     // 其他处理学生信息的逻辑方法

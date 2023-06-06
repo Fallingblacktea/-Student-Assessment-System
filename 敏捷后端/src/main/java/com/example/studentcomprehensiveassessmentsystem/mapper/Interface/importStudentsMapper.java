@@ -9,7 +9,11 @@ public interface importStudentsMapper {
 
     @Insert("INSERT INTO studentsinfo(name, gender, studentID, grade, classname, hometown, contact, personalSummary, GPA, volunteerService, researchStatus, studentService, socialPractice, summaryScore) " +
             "VALUES(#{name}, #{gender}, #{studentId}, #{grade}, #{classname}, #{hometown}, #{contact}, #{personalSummary}, #{GPA}, #{volunteerService}, #{researchStatus}, #{studentService}, #{socialPractice}, #{summaryScore})")
-    void insert(importStudentsDO ImportStudentsDO);
+    void insertStudentsInfo(importStudentsDO ImportStudentsDO);
+
+    @Insert("INSERT INTO user(username, password ) " +
+            "VALUES(#{studentId}, #{name})")
+    void insertUsers(importStudentsDO ImportStudentsDO);
 
     // 其他数据库操作方法
 }
