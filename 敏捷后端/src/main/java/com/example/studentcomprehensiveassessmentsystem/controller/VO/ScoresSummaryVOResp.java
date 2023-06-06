@@ -13,7 +13,7 @@ public class ScoresSummaryVOResp {
     private String contact;
     private String personalSummary;
     private String volunteerService;
-    private String GPA;
+    private double GPA;
     private String researchStatus;
     private String studentService;
     private String socialPractice;

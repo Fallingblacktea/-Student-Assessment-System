@@ -1,5 +1,4 @@
-import request from '/src/utils/request'
-
+import request from '../utils/request'
 export function getPSdata() {
     return request({
       url: '/personalSummary',
@@ -33,6 +32,12 @@ export function getPSdata() {
   export function getSVdata() {
     return request({
       url: '/studentService',
+      method: 'get',
+    });
+  }
+  export function getSMdata(){
+    return request({
+      url: '/scoresSummary',
       method: 'get',
     });
   }

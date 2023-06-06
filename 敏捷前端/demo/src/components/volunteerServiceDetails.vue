@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>{{ student.name }}的志愿时长</h3> 
-    <p>{{ student.hours }}</p>
+    <p>{{ student.serviceDuration }}</p>
 
     <h4>评分</h4>
     <el-input
@@ -24,7 +24,7 @@ export default {
     return {//后续student要改成数据库里的studentID
       student: {
         name: '',
-        hours: '',
+        serviceDuration: '',
       },
       score: null,
     };

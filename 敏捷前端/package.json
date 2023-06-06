@@ -66,9 +66,11 @@
     "vue": "^3.2.39"
   },
   "dependencies": {
+    "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",
     "element-plus": "^2.3.5",
     "vue-sidebar-menu": "^4.8.1",
+    "vuex": "^4.0.2",
     "xlsx": "^0.18.5"
   }
 }

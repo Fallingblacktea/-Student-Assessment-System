@@ -29,9 +29,7 @@
       };
     },
     mounted() {
-      const studentID = {
-        studentID:this.$route.params.studentID
-      }
+      const studentID = this.$route.params.studentID
       ;
     this.getStudentInfo(studentID);
   },

@@ -17,16 +17,16 @@ import researchStatusDetails from '../components/researchStatusDetails.vue'
 import studentServiceDetails from '../components/studentServiceDetails.vue'
 import socialPracticeDetails from '../components/socialPracticeDetails.vue'
 import LogoutView from '../components/LogoutView.vue'
-
-
 import  SidebarMenu  from '../sidebar.vue'
+import { running } from '../api/running'
+
 const runningroute = [
   {
-    path: 'importStudents',
+    path: '/importStudents',
       name: 'importStudents',
       component: importStudents
   },{
-    path: 'scoresSummary',
+    path: '/scoresSummary',
     name: 'scoresSummary',
     component: scoresSummary
   },
@@ -160,15 +160,15 @@ const runningroute = [
     component: LogoutView
   }
 ]
-  const SystemRouter = [
-    {
-    path:'/',
-    component:SidebarMenu,
-    children:[
-    //从此处开始
+const SystemRouter = [
+  {
+  path:'/',
+  component:SidebarMenu,
+  children:[
     runningroute[0],
     runningroute[1],
     runningroute[2],
+    runningroute[10],
     runningroute[3],
     runningroute[4],
     runningroute[5],
@@ -176,6 +176,19 @@ const runningroute = [
     runningroute[7],
     runningroute[8],
     runningroute[9],
-    runningroute[10]
-  ]}]
-  export default SystemRouter
+  ]
+}]
+// running()
+//         .then(response => {
+//           const menulist = response.data.map(i => runningroute[i]);
+//           menulist.push(runningroute[10]);
+//           SystemRouter[0].children = menulist;
+// }
+//   )
+//   .catch(error => {
+//     console.error(error);
+//   });
+//   console.log(SystemRouter[0].children);
+console.log(SystemRouter[0].children);
+export default SystemRouter
+console.log(SystemRouter[0].children);

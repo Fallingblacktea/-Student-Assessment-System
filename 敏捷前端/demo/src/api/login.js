@@ -1,5 +1,4 @@
-import request from '/src/utils/request'
-
+import request from '../utils/request'
 // 用户登录
 export function login(username, password) {
   const data = {

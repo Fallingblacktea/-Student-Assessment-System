@@ -21,6 +21,7 @@
   <script>
   import { h, markRaw } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  import { running } from './api/running'
 
   const separator = {
     template: '<hr style="border-color: rgba(0, 0, 0, 0.1); margin: 20px;">'
@@ -105,25 +106,34 @@
             icon: faIcon({ icon: 'fa-solid fa-cog' })
           },
   ]
+// const menuformanager = [
+//   runningmenu[0],
+//   runningmenu[1],
+//   runningmenu[2],
+//   runningmenu[3],
+//   runningmenu[13]
+// ]
+// const menuforreviewer = [
+//   runningmenu[4],
+//   runningmenu[5],
+//   runningmenu[6],
+//   runningmenu[7],
+//   runningmenu[8],
+//   runningmenu[9],
+//   runningmenu[10],
+//   runningmenu[13]
+// ]
+// const menuforstudent = [
+//   runningmenu[11],
+//   runningmenu[12],
+//   runningmenu[13]
+// ]
+
   export default {
     
     data () {
       return {
         menu: [
-        runningmenu[0],
-          runningmenu[1],
-          runningmenu[2],
-          runningmenu[3],
-          runningmenu[4],
-          runningmenu[5],
-          runningmenu[6],
-          runningmenu[7],
-          runningmenu[8],
-          runningmenu[9],
-          runningmenu[10],
-          runningmenu[11],
-          runningmenu[12],
-          runningmenu[13]
         ],
       }
     },
@@ -131,7 +141,36 @@
       this.onResize()
       window.addEventListener('resize', this.onResize)
     },
+    created() {
+    this.fetchMenuList();
+  },
     methods: {
+      fetchMenuList() {
+      running()
+        .then(response => {
+          const menulist = response.data.map(i => runningmenu[i]);
+          switch(response.data[0]){
+            case 0 :
+              menulist.push(runningmenu[3]);
+              break;
+            case 3 :
+            menulist.shift();
+            menulist.push(runningmenu[9]);
+            menulist.push(runningmenu[10]);
+              break;
+            default:
+              menulist.shift();
+            menulist.unshift(runningmenu[11]);
+            menulist.push(runningmenu[12]);
+
+          };
+          menulist.push(runningmenu[13]);
+          this.menu = menulist;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
       onToggleCollapse (collapsed) {
         console.log('onToggleCollapse')
       },

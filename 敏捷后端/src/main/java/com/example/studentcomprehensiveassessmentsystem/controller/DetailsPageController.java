@@ -18,8 +18,8 @@ public class DetailsPageController {
 
     @GetMapping("/personalSummary/details")
     public CommonResult<DetailsPagePersonalSummaryVODOResp> getPersonalSummaryDetails(
-            @RequestBody DetailsPagePersonalSummaryVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         DetailsPagePersonalSummaryVODOResp result = detailsPageService.getPersonalSummary(studentID);
 
         return CommonResult.success(result);
@@ -27,36 +27,36 @@ public class DetailsPageController {
 
     @GetMapping("/volunteerService/details")
     public CommonResult<DetailsPageVolunteerServiceVODOResp> getVolunteerServiceDetails(
-            @RequestBody DetailsPageVolunteerServiceVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         DetailsPageVolunteerServiceVODOResp result=detailsPageService.getVolunteerServiceDetails(studentID);
         return CommonResult.success(result);
     }
     @GetMapping("/studentScores/details")
     public CommonResult<DetailsPageStudentScoresVODOResp> getStudentScoresDetails(
-            @RequestBody DetailsPageStudentScoresVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         DetailsPageStudentScoresVODOResp result=detailsPageService.getStudentScoresDetails(studentID);
         return CommonResult.success(result);
     }
     @GetMapping("/researchStatus/details")
     public CommonResult<List<DetailsPageResearchStatusVODOResp>> getResearchStatusDetails(
-            @RequestBody DetailsPageResearchStatusVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         List<DetailsPageResearchStatusVODOResp> result=detailsPageService.getResearchStatusDetails(studentID);
         return CommonResult.success(result);
     }
     @GetMapping("/studentService/details")
     public CommonResult<List<DetailsPageStudentServiceVODOResp>> getStudentServiceDetails(
-            @RequestBody DetailsPageStudentServiceVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         List<DetailsPageStudentServiceVODOResp> result=detailsPageService.getStudentServiceDetails(studentID);
         return CommonResult.success(result);
     }
     @GetMapping("/socialPractice/details")
     public CommonResult<List<DetailsPageSocialPracticeVODOResp>> getSocialPracticeDetails(
-            @RequestBody DetailsPageSocialPracticeVODOReq request) {
-        int studentID = request.getStudentID();
+            @RequestParam int studentID) {
+
         List<DetailsPageSocialPracticeVODOResp> result=detailsPageService.getSocialPracticeDetails(studentID);
         return CommonResult.success(result);
     }
