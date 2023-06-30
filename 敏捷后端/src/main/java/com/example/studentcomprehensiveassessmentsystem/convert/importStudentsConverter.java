@@ -7,7 +7,7 @@ public class importStudentsConverter {
         importStudentsDO result = new importStudentsDO();
         result.setName(vo.getName());
         result.setGender(vo.getGender());
-        result.setStudentId(vo.getStudentId());
+        result.setStudentID(vo.getStudentId());
         result.setGrade(vo.getGrade());
         result.setClassname(vo.getClassname());
         result.setHometown(vo.getHometown());

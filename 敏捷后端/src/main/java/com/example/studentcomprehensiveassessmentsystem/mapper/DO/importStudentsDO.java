@@ -13,7 +13,7 @@ public class importStudentsDO {
     private String gender;
 
     @ExcelProperty(index = 2)
-    private String studentId;
+    private String studentID;
 
     @ExcelProperty(index = 3)
     private String grade;
