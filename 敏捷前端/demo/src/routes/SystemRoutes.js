@@ -183,12 +183,13 @@ const SystemRouter = [
 //           const menulist = response.data.map(i => runningroute[i]);
 //           menulist.push(runningroute[10]);
 //           SystemRouter[0].children = menulist;
+//           console.log(SystemRouter[0].children);
 // }
 //   )
 //   .catch(error => {
 //     console.error(error);
 //   });
 //   console.log(SystemRouter[0].children);
-console.log(SystemRouter[0].children);
+
 export default SystemRouter
-console.log(SystemRouter[0].children);
+
