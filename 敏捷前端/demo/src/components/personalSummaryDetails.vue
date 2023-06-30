@@ -29,13 +29,15 @@
       };
     },
     mounted() {
-      const studentID = this.$route.params.studentID;
+      const studentID = this.$route.params.studentID
+      ;
     this.getStudentInfo(studentID);
   },
     methods: {
       getStudentInfo(studentID) {
       getPSID(studentID).then(response => {
         this.student = response.data;
+        console.log(response.data);
       });
     },
     submitScore() {

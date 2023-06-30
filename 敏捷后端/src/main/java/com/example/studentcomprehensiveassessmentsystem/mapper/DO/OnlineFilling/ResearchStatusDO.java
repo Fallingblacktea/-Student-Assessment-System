@@ -17,7 +17,7 @@ public class ResearchStatusDO {
     private String award;
     private String level;
     public void setTime(String time) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.time = dateFormat.parse(time);
     }
     // 省略构造函数、getter和setter方法

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {getAccessToken} from '../utils/auth'
 
 const service = axios.create({
   baseURL: 'http://localhost:28080/',
@@ -9,7 +9,10 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 在请求发送之前对请求数据进行处理
-    // ...
+    if (getAccessToken() ) {
+      config.headers['Authorization'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    }
+    
     
     return config;
   },

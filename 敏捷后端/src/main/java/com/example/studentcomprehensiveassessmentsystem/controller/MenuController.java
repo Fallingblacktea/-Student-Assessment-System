@@ -16,7 +16,7 @@ public class MenuController {
     private JwtTokenUtil jwtTokenUtil;
 
 
-    @PostMapping("/menu")
+    @GetMapping ("/menu")
     public CommonResult<?> getMenu(@RequestHeader("Authorization") String authHeader) {
 
         // 解析Authorization请求头中的JWT令牌 Bearer access_token

@@ -1,11 +1,11 @@
-import request from '/src/utils/request'
+import request from '../utils/request'
 
   export function getPSID(studentID) {
     return request({
       url: '/personalSummary/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }
@@ -13,8 +13,8 @@ import request from '/src/utils/request'
     return request({
       url: '/researchStatus/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }
@@ -22,8 +22,8 @@ import request from '/src/utils/request'
     return request({
       url: '/studentScores/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }
@@ -31,8 +31,8 @@ import request from '/src/utils/request'
     return request({
       url: '/socialPractice/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }
@@ -40,17 +40,17 @@ import request from '/src/utils/request'
     return request({
       url: '/studentService/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }
   export function getVSID(studentID) {
     return request({
-      url: '/socialPractice/details',
+      url: '/volunteerService/details',
       method: 'get',
-      data:{
-        studentID:studentID
+      params: {
+        studentID
       }
     });
   }

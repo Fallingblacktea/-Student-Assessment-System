@@ -1,291 +1,56 @@
 <template>
-  <sidebar-menu
-    v-model:collapsed="collapsed"
-    :menu="menu"
-    :theme="selectedTheme"
-    :show-one-child="true"
-    @update:collapsed="onToggleCollapse"
-    @item-click="onItemClick"
-  />
-  <div
-    v-if="isOnMobile && !collapsed"
-    class="sidebar-overlay"
-    @click="collapsed = true"
-  />
-  <div
-    id="demo"
-    :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]"
-  >
+  <div id="demo" :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]">
     <div class="demo">
       <div class="container">
+        <img src="./assets/images/pku.jpg" class="logo">
         <h2>北京大学学生评奖系统</h2>
-        <div>
-          请选择主题：
-          <select v-model="selectedTheme">
-            <option
-              v-for="(theme, index) in themes"
-              :key="index"
-              :value="theme.input"
-            >
-              {{ theme.name }}
-            </option>
-          </select>
-        </div>
-        <hr style="margin: 10px 0px;border: 1px solid #e3e3e3;">
+        <hr class="divider">
         <router-view />
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { h, markRaw } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-const separator = {
-  template: '<hr style="border-color: rgba(0, 0, 0, 0.1); margin: 20px;">'
-}
-
-const faIcon = (props) => {
-  return {
-    element: markRaw({
-      render: () => h('div', [
-        h(FontAwesomeIcon, { size: 'lg', ...props })
-      ])
-    })
-  }
-}
-
-export default {
-  name: 'App',
-  data () {
-    return {
-      menu: [
-        {
-          header: '学生管理员',
-          hiddenOnCollapse: true
-        },
-        {
-          href: '/',
-          title: '导入学生名单',
-          icon: faIcon({ icon: 'fa-solid fa-download' })
-        },
-        {
-          href: '/scoresSummary',
-          title: '成绩汇总',
-          icon: faIcon({ icon: 'fa-solid fa-code' })
-        },
-        {
-          href: '/exportData',
-          title: '成绩导出',
-          icon: faIcon({ icon: 'fa-solid fa-code' })
-        },
-        {
-          header: '评委',
-          hiddenOnCollapse: true
-        },
-        {
-          href: '/personalSummary',
-          title: '个人学年总结',
-          icon: faIcon({ icon: 'fa-solid fa-cogs' })
-        },
-        {
-          href: '/volunteerService',
-          title: '志愿服务',
-          icon: faIcon({ icon: 'fa-solid fa-cogs' })
-        },
-        {
-          href: '/studentScores',
-          title: '学生成绩',
-          icon: faIcon({ icon: 'fa-solid fa-bell' })
-        },
-        {
-          href: '/researchStatus',
-          title: '科研情况',
-          icon: faIcon({ icon: 'fa-solid fa-palette' })
-        },
-
-        {
-          href: '/studentService',
-          title: '学生骨干服务岗位',
-          icon: faIcon({ icon: 'fa-solid fa-palette' })
-        },
-        {
-          href: '/socialPractice',
-          title: '社会实践',
-          icon: faIcon({ icon: 'fa-solid fa-palette' })
-        },
-        {
-          component: markRaw(separator)
-        },
-        {
-          header: '学生',
-          hiddenOnCollapse: true
-        },
-        {
-          href: '/onlineFilling',
-          title: '在线填报',
-          icon: faIcon({ icon: 'fa-solid fa-palette' })
-        }
-        // ,
-        // {
-        //   href: '/disabled',
-        //   title: 'Disabled page',
-        //   icon: faIcon({ icon: 'fa-solid fa-lock' }),
-        //   disabled: true
-        // },
-        // {
-        //   title: 'Badge',
-        //   icon: faIcon({ icon: 'fa-solid fa-cog' }),
-        //   badge: {
-        //     text: 'new',
-        //     class: 'vsm--badge_default'
-        //   }
-        // },
-        // {
-        //   href: '/page',
-        //   title: 'Dropdown Page',
-        //   icon: faIcon({ icon: 'fa-solid fa-list-ul' }),
-        //   child: [
-        //     {
-        //       href: '/page/sub-page-1',
-        //       title: 'Sub Page 01',
-        //       icon: faIcon({ icon: 'fa-solid fa-file-alt', size: 'sm' })
-        //     },
-        //     {
-        //       href: '/page/sub-page-2',
-        //       title: 'Sub Page 02',
-        //       icon: faIcon({ icon: 'fa-solid fa-file-alt', size: 'sm' })
-        //     }
-        //   ]
-        // },
-        // {
-        //   title: 'Multiple Level',
-        //   icon: faIcon({ icon: 'fa-solid fa-list-alt' }),
-        //   child: [
-        //     {
-        //       title: 'page'
-        //     },
-        //     {
-        //       title: 'Level 2 ',
-        //       child: [
-        //         {
-        //           title: 'page'
-        //         },
-        //         {
-        //           title: 'Page'
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       title: 'Page'
-        //     },
-        //     {
-        //       title: 'Another Level 2',
-        //       child: [
-        //         {
-        //           title: 'Level 3',
-        //           child: [
-        //             {
-        //               title: 'Page'
-        //             },
-        //             {
-        //               title: 'Page'
-        //             }
-        //           ]
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // }
-      ],
-      collapsed: false,
-      themes: [
-        {
-          name: 'Default theme',
-          input: ''
-        },
-        {
-          name: 'White theme',
-          input: 'white-theme'
-        }
-      ],
-      selectedTheme: 'white-theme',
-      isOnMobile: false
-    }
-  },
-  mounted () {
-    this.onResize()
-    window.addEventListener('resize', this.onResize)
-  },
-  methods: {
-
-     
-    onToggleCollapse (collapsed) {
-      console.log('onToggleCollapse')
-    },
-    onItemClick (event, item) {
-      console.log('onItemClick')
-      // console.log(event)
-      // console.log(item)
-    },
-    onResize () {
-      if (window.innerWidth <= 767) {
-        this.isOnMobile = true
-        this.collapsed = true
-      } else {
-        this.isOnMobile = false
-        this.collapsed = false
-      }
-    }
-  }
-}
-</script>
-
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
-
-body,
-html {
-  margin: 0;
-  padding: 0;
+.container { 
+  text-align: center; 
+  background-color: #fafafa; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+  max-width: 800px; 
+  margin: 10px ; 
+  margin-left: -10px ;
+  padding: 10px; 
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 18px;
-  background-color: #f2f4f7;
-  color: #262626;
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
 }
 
-#demo {
-  padding-left: 290px;
-  transition: 0.3s ease;
-}
-#demo.collapsed {
-  padding-left: 65px;
-}
-#demo.onmobile {
-  padding-left: 65px;
+h2 { 
+  margin-top: 32px; 
+  margin-bottom: 16px; 
+  font-size: 48px; 
+  font-weight: 300; 
+  color: #556677; 
+  font-family: "Helvetica Neue", Arial, sans-serif;
+} 
+
+.divider {
+  margin: 24px auto;
+  border: none;
+  border-top: 1px solid #ddd;
+  width: 50%;
 }
 
-.sidebar-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 900;
-}
-
-.demo {
-  padding-top: -10px;
-  padding-left: 20px;
-}
-
-.container {
-  max-width: 900px;
+@media (max-width: 768px) {
+  .container {
+      width: 90%;
+      font-size: 16px;
+  }
 }
 </style>
