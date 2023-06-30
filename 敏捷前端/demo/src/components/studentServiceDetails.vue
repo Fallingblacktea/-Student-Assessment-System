@@ -52,7 +52,7 @@ export default {
       });
     },
     submitScore() {
-      submitScoreToBackend(this.score, this.student.id)
+      submitScoreToBackend(this.score, this.$route.params.studentID)
   .then(response => {
     // 显示消息
     this.$message.success(response.data.message);

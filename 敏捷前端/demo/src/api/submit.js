@@ -33,8 +33,8 @@ export function onlineFillingSubmit(form){
 }
 export function submitScorePS(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/personalSummary/scores',
@@ -44,8 +44,8 @@ export function submitScorePS(score,studentID) {
 }
 export function submitScoreRS(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/researchStatus/scores',
@@ -55,8 +55,8 @@ export function submitScoreRS(score,studentID) {
 }
 export function submitScoreSP(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/socialPractice/scores',
@@ -66,8 +66,8 @@ export function submitScoreSP(score,studentID) {
 }
 export function submitScoreSS(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/studentScores/scores',
@@ -77,8 +77,8 @@ export function submitScoreSS(score,studentID) {
 }
 export function submitScoreSV(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/studentService/scores',
@@ -88,8 +88,8 @@ export function submitScoreSV(score,studentID) {
 }
 export function submitScoreVS(score,studentID) {
   const data = {
-    score:score,
-    studentID:studentID
+    studentID:studentID,
+    scores:score
   }
   return request({
     url: '/volunteerService/scores',
