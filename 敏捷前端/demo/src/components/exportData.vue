@@ -6,26 +6,21 @@
 
 <script>
 import { exportdata } from '../api/exportData';
-
+import { saveAs } from 'file-saver';
 export default {
   methods: {
     exportData() {
       exportdata()
       .then((response) => {
-          const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           const fileName = 'scores_summary.xlsx';
-          if (window.navigator.msSaveOrOpenBlob) {
-            // For IE browser
-            window.navigator.msSaveOrOpenBlob(blob, fileName);
-          } else {
-            // For other browsers
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.href = url;
-            link.download = fileName;
-            link.click();
-            URL.revokeObjectURL(url);
-          }
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', fileName);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
           this.$message.success('数据导出成功');
         })
         .catch((error) => {

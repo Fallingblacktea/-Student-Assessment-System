@@ -19,9 +19,9 @@
 
         <el-form-item label="3. 科研情况">
           <el-table :data="form.researchStatus" style="width: 100%">
-            <el-table-column prop="rank" label="名次">
+            <el-table-column prop="ranking" label="名次">
               <template #default="scope">
-                <el-input v-model="scope.row.rank"></el-input>
+                <el-input v-model="scope.row.ranking"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="time" label="时间">
@@ -55,9 +55,9 @@
 
         <el-form-item label="4. 学生骨干服务岗位">
           <el-table :data="form.studentService" style="width: 100%">
-            <el-table-column prop="startDate" label="起始时间">
+            <el-table-column prop="startTime" label="起始时间">
               <template #default="scope">
-                <el-input v-model="scope.row.startDate"></el-input>
+                <el-input v-model="scope.row.startTime"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="positionName" label="服务岗位名称">
@@ -65,9 +65,9 @@
                 <el-input v-model="scope.row.positionName"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="role" label="职务">
+            <el-table-column prop="positionTitle" label="职务">
               <template #default="scope">
-                <el-input v-model="scope.row.role"></el-input>
+                <el-input v-model="scope.row.positionTitle"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="assessmentLevel" label="考核级别">
@@ -86,9 +86,9 @@
 
         <el-form-item label="5. 社会实践情况">
           <el-table :data="form.socialPractice" style="width: 100%">
-            <el-table-column prop="initiatingUnit" label="发起单位">
+            <el-table-column prop="initiatingOrganization" label="发起单位">
               <template #default="scope">
-                <el-input v-model="scope.row.initiatingUnit"></el-input>
+                <el-input v-model="scope.row.initiatingOrganization"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="location" label="地点">
@@ -106,24 +106,24 @@
                 <el-input-number v-model="scope.row.teamSize" :step="1" :precision="0"></el-input-number>
               </template>
             </el-table-column>
-            <el-table-column prop="teamRole" label="团内职务">
+            <el-table-column prop="teamPosition" label="团内职务">
               <template #default="scope">
-                <el-input v-model="scope.row.teamRole"></el-input>
+                <el-input v-model="scope.row.teamPosition"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="online" label="是否线上">
+            <el-table-column prop="isOnline" label="是否线上">
               <template #default="scope">
-                <el-checkbox v-model="scope.row.online"></el-checkbox>
+                <el-checkbox v-model="scope.row.isOnline"></el-checkbox>
               </template>
             </el-table-column>
-            <el-table-column prop="rewarded" label="是否获得奖励">
+            <el-table-column prop="hasAward" label="是否获得奖励">
               <template #default="scope">
-                <el-checkbox v-model="scope.row.rewarded"></el-checkbox>
+                <el-checkbox v-model="scope.row.hasAward"></el-checkbox>
               </template>
             </el-table-column>
-            <el-table-column prop="rewardName" label="奖励名称">
+            <el-table-column prop="awardName" label="奖励名称">
               <template #default="scope">
-                <el-input v-model="scope.row.rewardName"></el-input>
+                <el-input v-model="scope.row.awardName"></el-input>
               </template>
             </el-table-column>
             <el-table-column>
