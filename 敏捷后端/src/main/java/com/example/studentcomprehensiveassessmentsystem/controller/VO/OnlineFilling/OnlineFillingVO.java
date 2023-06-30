@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class OnlineFillingVO {
-    private int studentID;
+
     private String personalSummary;
     private double GPA;
     private ResearchStatus[] researchStatus;
