@@ -6,14 +6,14 @@
 
 <script>
 import { exportdata } from '../api/exportData';
-import { saveAs } from 'file-saver';
+
 export default {
   methods: {
     exportData() {
       exportdata()
       .then((response) => {
           const fileName = 'scores_summary.xlsx';
-          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/octet-stream' }));
           const link = document.createElement('a');
           link.href = url;
           link.setAttribute('download', fileName);

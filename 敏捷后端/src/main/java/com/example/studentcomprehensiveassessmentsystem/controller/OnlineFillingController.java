@@ -23,18 +23,17 @@ public class OnlineFillingController {
         // 解析Authorization请求头中的JWT令牌 Bearer access_token
         String token = authHeader.substring(7);
         int studentID = Integer.parseInt(jwtTokenUtil.getUsernameFromToken(token));
+
         // 插入个人陈述表
         PersonalSummaryDO personalSummaryDO = new PersonalSummaryDO();
         personalSummaryDO.setStudentId(studentID);
         personalSummaryDO.setPersonalSummary(request.getPersonalSummary());
         onlineFillingService.createPersonalSummary(personalSummaryDO);
 
-        // 插入志愿服务表
-
-
-        // 插入学生成绩表
+        // 修改GPA
         StudentScoresDO studentScoresDO = new StudentScoresDO();
         studentScoresDO.setStudentId(studentID);
+        System.out.println(request.getGPA());
         studentScoresDO.setGPA(request.getGPA());
         onlineFillingService.createStudentScores(studentScoresDO);
 
