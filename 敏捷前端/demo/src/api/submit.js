@@ -21,6 +21,16 @@ export function importStudentsSubmit(file) {
     }
   });
 }
+export function importVSSubmit(file) {
+  return request({
+    url: '/volunteerService/file',
+    method: 'post',
+    data: file,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
 export function onlineFillingSubmit(form){
   return request({
     url: '/onlineFilling',

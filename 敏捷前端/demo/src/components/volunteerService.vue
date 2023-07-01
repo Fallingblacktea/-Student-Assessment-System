@@ -33,6 +33,8 @@
   
   <script >
     import { getVSdata } from '/src/api/getTableData.js'
+    import { ElMessage } from 'element-plus'
+    import { importVSSubmit } from '/src/api/submit.js';
   export default {
     data() {
     return {
@@ -46,6 +48,23 @@
     this.fetchData();
   },
     methods: {
+      handleFileUpload(event) {
+      this.file = event.target.files[0];
+    },
+    async submitFile() {
+      if (this.file) {
+        const formData = new FormData();
+        formData.append('file', this.file); // 将文件添加到FormData对象中，'file'是服务器端接收文件的字段名
+        try {
+          const response = await importVSSubmit(formData); // 使用submit函数发送FormData对象
+          ElMessage.success('上传成功'); // 处理上传成功后的逻辑
+        } catch (error) {
+          ElMessage.error('上传失败'); // 处理上传失败的逻辑
+        }
+        // 可以使用 FormData 或其他方式将文件发送到服务器
+        console.log("提交文件:", this.file);
+      }
+    },
       fetchData() {
       // 调用后端接口获取数据
       getVSdata()

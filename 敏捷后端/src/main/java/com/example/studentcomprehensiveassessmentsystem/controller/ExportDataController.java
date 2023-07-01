@@ -30,7 +30,7 @@ public class ExportDataController {
 
             // 返回 Excel 文件给前端
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
             headers.setContentDisposition(ContentDisposition.builder("attachment").filename("scores_summary.xlsx").build());
             return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
         } catch (Exception e) {
@@ -38,7 +38,8 @@ public class ExportDataController {
             String errorMessage = "Error exporting data to Excel: " + e.getMessage();
             byte[] errorBytes = errorMessage.getBytes();
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.TEXT_PLAIN);
+            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+
             headers.setContentDisposition(ContentDisposition.builder("attachment").filename("error.txt").build());
             return new ResponseEntity<>(errorBytes, headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }

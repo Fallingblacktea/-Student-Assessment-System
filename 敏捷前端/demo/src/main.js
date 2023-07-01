@@ -10,12 +10,12 @@ import 'element-plus/dist/index.css'
 import SystemRouter from './routes/SystemRoutes'
 // import './permission.js' 
 import VueSidebarMenu from '../../src'
-import { getAccessToken } from './utils/auth'
+import { getAccessToken ,removeToken} from './utils/auth'
 
 import LoginView from './User/LoginView.vue'
 import RegisterView from './User/RegisterView.vue'
 import store from './store';
-
+import {validateAccessToken} from './api/tokenValid'
 console.log(SystemRouter[0].children);
 const router = createRouter({
  history: createWebHashHistory(),
@@ -46,22 +46,38 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')
 
- router.beforeEach((to, from, next) => {
-    if (getAccessToken()) {
-      if (to.path === '/login'||to.path === '/register') {
-        next({ path: '/' })
-      } 
-      next()
-    } else {
-      // 没有token
-      if (to.path === '/login'||to.path === '/register') {
-        // 直接进入
-        next()
+router.beforeEach(async (to, from, next) => {
+  if (getAccessToken()) {
+    try {
+      const response = await validateAccessToken();
+      const tokenValid = response.data;
+      // 处理验证结果
+      if (tokenValid) {
+        if (to.path === '/login' || to.path === '/register') {
+          next({ path: '/' });
+        } else {
+          next();
+        }
       } else {
-        next('/login') // 否则全部重定向到登录页
+        // 访问令牌失效，重定向到登录路径
+        removeToken();
+        next({ path: '/login' });
       }
+    } catch (error) {
+      // 处理错误情况
+      console.error('验证访问令牌时发生错误:', error);
     }
-  })
+  } else {
+    // 没有token
+    if (to.path === '/login' || to.path === '/register') {
+      // 直接进入
+      next();
+    } else {
+      next('/login'); // 否则全部重定向到登录页
+    }
+  }
+});
+
   
   router.afterEach(() => {
     

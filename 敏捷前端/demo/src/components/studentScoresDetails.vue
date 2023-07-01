@@ -5,7 +5,7 @@
 
     <h4>是否正确</h4>
     
-    <el-radio-group v-model="present">
+    <el-radio-group v-model="correct">
       <el-radio label="true">是</el-radio>
       <el-radio label="false">否</el-radio>
     </el-radio-group>
@@ -26,7 +26,7 @@ export default {
         name: '',
         gpa: '',
       },
-      present:''
+      correct:''
     };
   },
   mounted() {
@@ -40,7 +40,7 @@ export default {
       });
     },
     submitScore() {
-      submitScoreToBackend(this.present, this.$route.params.studentID)
+      submitScoreToBackend(this.correct, this.$route.params.studentID)
   .then(response => {
     // 显示消息
     this.$message.success(response.data.message);
@@ -48,7 +48,7 @@ export default {
   .catch(error => {
     // 处理错误
   });  // 在这里执行提交分数的逻辑
-      console.log('是否正确:', this.present);
+      console.log('是否正确:', this.correct);
     },
   },
 };
