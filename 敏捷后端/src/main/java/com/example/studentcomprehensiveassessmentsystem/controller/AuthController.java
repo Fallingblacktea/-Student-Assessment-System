@@ -64,7 +64,7 @@ public class AuthController {
             Claims claims = jws.getBody();
             long expirationTime = claims.getExpiration().getTime();
             long currentTime = System.currentTimeMillis();
-            return currentTime >= expirationTime;
+            return currentTime <= expirationTime;
         } catch (ExpiredJwtException e) {
             System.out.println("expired");
             return false; // 解析时如果捕获到 ExpiredJwtException 异常，则表示令牌已过期
