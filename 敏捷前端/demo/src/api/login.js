@@ -14,6 +14,15 @@ export function login(username, password,captchaText) {
     }
   })
 }
+//接收验证码
+export function getCaptcha() {
+  return request({
+    url: '/captcha',
+    method: 'get',
+    responseType: 'blob',
+    withCredentials: true // 设置withCredentials为true来处理Cookie
+  })
+};
 //用户注册
 export function register(name,idCard,password,phone,email) {
   const data = {
