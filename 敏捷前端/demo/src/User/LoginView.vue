@@ -10,10 +10,14 @@
           <el-form-item prop="password">
             <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
           </el-form-item>
-          <el-form-item prop="captcha">
-            <img src="http://localhost:28080/captcha" alt="Captcha">
-            <input type="text" name="captchaText" v-model="loginForm.captcha" placeholder="请输入验证码">
-          </el-form-item>
+          <div class="captcha-container">
+            <div class="captcha-wrapper">
+              <img :src="captchaUrl" alt="Captcha">
+            </div>
+            <div class="captcha-input">
+              <input type="text" name="captchaText" v-model="loginForm.captchaText" placeholder="请输入验证码">
+            </div>
+          </div>
         </el-form>
         <div class="button-container">
           <el-button type="primary" @click="do_login" :loading="loading">登录</el-button>
@@ -25,44 +29,66 @@
 </template>
   
   <script>
-import { login } from '../api/login.js'
+import { getCaptcha, login } from '../api/login.js'
 import {setToken} from '../utils/auth'
+import { getCaptcha } from '../api/login.js'
   export default {
     data() {
       return {
         loginForm: {
           username: '',
           password: '',
-          captcha: ''
+          captchaText: ''
         },
         rules: {
           username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
           password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-          captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+          captchaText: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
         },
         loading: false,
-        captchaImageUrl: '' // 添加验证码图片地址属性
+        captchaUrl: ''
       }
     },
+    
     methods: {
-      do_login() {
-        this.$refs.form.validate(valid => {
-          if (valid) {
-            this.loading = true
-            //发起网络请求，登录，如果登陆成功，跳转到主页面
-            login(this.loginForm.username,this.loginForm.password,this.loginForm.captcha).then(res =>{
-            setToken(res.data.accessToken)
-            this.$router.push({ path: '/' })
-            }).catch(() => {
-              // 登录失败，显示错误提示
-              this.$message.error('用户名或密码错误')
-              this.loading = false
+    do_login() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          // 发起网络请求，登录，如果登陆成功，跳转到主页面
+          login(this.loginForm.username, this.loginForm.password, this.loginForm.captchaText)
+            .then(res => {
+              setToken(res.data.accessToken);
+              this.$router.push({ path: '/' });
             })
-          }
+            .catch(() => {
+              // 登录失败，显示错误提示
+              this.$message.error('用户名或密码错误');
+              this.loading = false;
+            });
+        }
+      });
+    },
+
+    loadCaptchaImage() {
+      getCaptcha()
+        .then(response => {
+          const imgUrl = URL.createObjectURL(response.data);
+          this.captchaUrl = imgUrl;
+           // 获取响应头中的 "SessionID" 字段并创建一个名为 "SessionID" 的 cookie
+           const SessionID = response.headers['SessionID'];
+           document.cookie = `SessionID=${SessionID}; path=/`;
         })
-      }
+        .catch(error => {
+          console.error(error);
+        });
     }
+  },
+
+  created() {
+    this.loadCaptchaImage();
   }
+}
   </script>
   
   <style lang="scss">
@@ -104,6 +130,18 @@ h1 {
 font-size:40px;
 margin-bottom:20px;
 text-align:center;
+}
+.captcha-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.captcha-wrapper {
+  margin-bottom: 10px;
+}
+
+.captcha-input {
+  text-align: center;
 }
 }
 

@@ -1,6 +1,8 @@
 import axios from 'axios';
-import {getAccessToken} from '../utils/auth'
 
+import {getAccessToken} from '../utils/auth'
+axios.defaults.withCredentials=true
+//允许其携带cookie
 const service = axios.create({
   baseURL: 'http://localhost:28080/',
   timeout: 5000

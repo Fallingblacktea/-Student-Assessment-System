@@ -1,6 +1,6 @@
 import request from '../utils/request'
 // 用户登录
-export function login(username, password,captcha) {
+export function login(username, password,captchaText) {
   const data = {
     username,
     password
@@ -10,10 +10,19 @@ export function login(username, password,captcha) {
     method: 'post',
     data: data,
     params: {
-      captcha
+      captchaText
     }
   })
 }
+//接收验证码
+export function getCaptcha() {
+  return request({
+    url: '/captcha',
+    method: 'get',
+    responseType: 'blob',
+    withCredentials: true // 设置withCredentials为true来处理Cookie
+  })
+};
 //用户注册
 export function register(name,idCard,password,phone,email) {
   const data = {

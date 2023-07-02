@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -32,8 +33,16 @@ public class AuthController {
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
-    public CommonResult<LoginRespVO> hello(@RequestBody @Valid LoginReqVO loginReqVO) {
+    public CommonResult<LoginRespVO> hello(HttpServletRequest request, @RequestParam("captchaText") String captchaText, @RequestBody @Valid LoginReqVO loginReqVO) {
+        System.out.println(captchaText);
         LoginReqDO loginReqDO = loginService.service(loginReqVO);
+        String storedCaptcha = (String) request.getSession().getAttribute("captcha");
+        System.out.println(storedCaptcha);
+        request.getSession().removeAttribute("captcha"); // 删除会话中的验证码
+        if (!captchaText.equalsIgnoreCase(storedCaptcha)) {
+            // 验证码错误，显示错误消息
+            return CommonResult.error(400,"验证码错误");
+        }
 
         if (loginReqDO == null) {
             return CommonResult.error(50007,"登录失败，账号密码不正确");
