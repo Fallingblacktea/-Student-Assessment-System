@@ -1,13 +1,8 @@
 import axios from 'axios';
-<<<<<<< HEAD
-import {getAccessToken} from '../utils/auth'
-axios.defaults.withCredentials = true;// 允许跨域携带cookie
-=======
 
 import {getAccessToken} from '../utils/auth'
 axios.defaults.withCredentials=true
 //允许其携带cookie
->>>>>>> ecfe88f71d99c5a2195b61e488b71caca125e300
 const service = axios.create({
   baseURL: 'http://localhost:28080/',
   timeout: 5000
@@ -16,6 +11,8 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 在请求发送之前对请求数据进行处理
+    // 设置请求头的 Cookie 属性为 SameSite=None
+  config.headers.Cookie = document.cookie + "; SameSite=None";
     if (getAccessToken() ) {
       config.headers['Authorization'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
