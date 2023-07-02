@@ -18,13 +18,14 @@ import java.util.function.Function;
 public class JwtTokenUtil {
 
 
-    private String secret="gx4SN/4gh6QPvLfVWCW8Aoo4l2n66d2338IwXyu1koDT1W94XS35OZJPYkA2IIMMgmlz96LCHSNc8jLYuzwB1IreKOZz2TZhsWODfjHAS9bYlduniCUSuSPZ5/OP15O63fn1kN1N5w64frpyWcWbTtiCgLMkJpnfjmqFMAr7fgcOGyt2rmunvFYni9T78Q4fn/0gpx3qm8zXw3oBbFb1Ge9Wnh1UCSapXd/EzLau3iaXqp9f+8FHmSCo9vbEaRSRMPHdcpnB4WKHKySE/BCNSsWM+kHmHyrAbvKErPCz2XXMnIalUoAtquq03LnmYjrBHyI230VcYEVzGmzLOTsSJw==";
+    @Value("${jwt.secret}")
+    private String secret;
 
+    @Value("${jwt.access_token.expiration}")
+    private Long accessTokenExpiration;
 
-    private Long accessTokenExpiration=36000L;
-
-
-    private Long refreshTokenExpiration=604800L;
+    @Value("${jwt.refresh_token.expiration}")
+    private Long refreshTokenExpiration;
 
     public String generateAccessToken(String username) {
         Map<String, Object> claims = new HashMap<>();
