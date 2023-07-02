@@ -34,10 +34,11 @@ public class AuthController {
     @ApiOperation("登录接口")
     @PostMapping("/login")
     public CommonResult<LoginRespVO> hello(HttpServletRequest request, @RequestParam("captchaText") String captchaText, @RequestBody @Valid LoginReqVO loginReqVO) {
+        System.out.println(captchaText);
         LoginReqDO loginReqDO = loginService.service(loginReqVO);
         String storedCaptcha = (String) request.getSession().getAttribute("captcha");
+        System.out.println(storedCaptcha);
         request.getSession().removeAttribute("captcha"); // 删除会话中的验证码
-
         if (!captchaText.equalsIgnoreCase(storedCaptcha)) {
             // 验证码错误，显示错误消息
             return CommonResult.error(400,"验证码错误");

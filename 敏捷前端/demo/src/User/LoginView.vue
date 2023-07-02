@@ -12,7 +12,7 @@
           </el-form-item>
           <el-form-item prop="captcha">
             <img src="http://localhost:28080/captcha" alt="Captcha">
-            <input type="text" name="captchaText" v-model="loginForm.captcha" placeholder="请输入验证码">
+            <input type="text" name="captchaText" v-model="loginForm.captchaText" placeholder="请输入验证码">
           </el-form-item>
         </el-form>
         <div class="button-container">
@@ -33,27 +33,25 @@ import {setToken} from '../utils/auth'
         loginForm: {
           username: '',
           password: '',
-          captcha: ''
+          captchaText: ''
         },
         rules: {
           username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
           password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-          captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+          captchaText: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
         },
         loading: false,
-        captchaImageUrl: '' // 添加验证码图片地址属性
+        
       }
     },
-    created() {
-    this.refreshCaptcha() // 在组件创建时获取验证码图片地址
-  },
+    
     methods: {
       do_login() {
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             //发起网络请求，登录，如果登陆成功，跳转到主页面
-            login(this.loginForm.username,this.loginForm.password,this.loginForm.captcha).then(res =>{
+            login(this.loginForm.username,this.loginForm.password,this.loginForm.captchaText).then(res =>{
             setToken(res.data.accessToken)
             this.$router.push({ path: '/' })
             }).catch(() => {

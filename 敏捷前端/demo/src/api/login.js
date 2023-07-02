@@ -1,6 +1,6 @@
 import request from '../utils/request'
 // 用户登录
-export function login(username, password,captcha) {
+export function login(username, password,captchaText) {
   const data = {
     username,
     password
@@ -10,7 +10,7 @@ export function login(username, password,captcha) {
     method: 'post',
     data: data,
     params: {
-      captcha
+      captchaText
     }
   })
 }
