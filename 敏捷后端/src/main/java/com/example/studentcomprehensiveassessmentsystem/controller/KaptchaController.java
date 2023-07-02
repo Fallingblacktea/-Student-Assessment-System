@@ -25,7 +25,6 @@ public class KaptchaController {
 
     @GetMapping("/captcha")
     public void showCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println(request.getSession().getId());
         // 生成验证码文本
         String captchaText = defaultKaptcha.createText();
 
@@ -33,7 +32,6 @@ public class KaptchaController {
 
         redisService.setValueWithExpiration(request.getSession().getId(),captchaText,60);
         String storedCaptcha = redisService.getValue(request.getSession().getId());
-        System.out.println(storedCaptcha);
         // 生成验证码图片
         BufferedImage captchaImage = defaultKaptcha.createImage(captchaText);
 
@@ -44,7 +42,7 @@ public class KaptchaController {
         cookie.setMaxAge(60);
         // 将Cookie添加到响应中
         response.addCookie(cookie);
-
+        response.setHeader("set-cookie", "SessionID=" + request.getSession().getId() + "; Path=/");
         // 将验证码图片写入响应
         response.setContentType("image/png");
         try (OutputStream outputStream = response.getOutputStream()) {
