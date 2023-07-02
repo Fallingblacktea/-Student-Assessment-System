@@ -12,7 +12,7 @@
           </el-form-item>
           <div class="captcha-container">
             <div class="captcha-wrapper">
-              <img :src="captchaUrl" alt="Captcha">
+              <img :src="captchaImageUrl" alt="Captcha" @click="refreshCaptcha" style="cursor: pointer;">
             </div>
             <div class="captcha-input">
               <input type="text" name="captchaText" v-model="loginForm.captchaText" placeholder="请输入验证码">
@@ -27,69 +27,83 @@
     </div>
   </div>
 </template>
-  
-  <script>
-import { getCaptcha, login } from '../api/login.js'
-import {setToken} from '../utils/auth'
-import { getCaptcha } from '../api/login.js'
-  export default {
-    data() {
-      return {
-        loginForm: {
-          username: '',
-          password: '',
-          captchaText: ''
-        },
-        rules: {
-          username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-          password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-          captchaText: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
-        },
-        loading: false,
-        captchaUrl: ''
-      }
-    },
-    
-    methods: {
+
+<script>
+import { login } from '../api/login.js'
+import { setToken } from '../utils/auth'
+
+export default {
+  data() {
+    return {
+      loginForm: {
+        username: '',
+        password: '',
+        captchaText: ''
+      },
+      rules: {
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        captchaText: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+      },
+      loading: false,
+      captchaImageUrl: 'http://localhost:28080/captcha'
+    }
+  },
+
+  methods: {
     do_login() {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.loading = true;
-          // 发起网络请求，登录，如果登陆成功，跳转到主页面
           login(this.loginForm.username, this.loginForm.password, this.loginForm.captchaText)
             .then(res => {
-              setToken(res.data.accessToken);
+              const code = res.code;
+              if (code === 200){
+                setToken(res.data.accessToken);
               this.$router.push({ path: '/' });
+              // 更新验证码图片URL
+      this.captchaImageUrl = '';
+      this.$nextTick(() => {
+        this.captchaImageUrl = 'http://localhost:28080/captcha?' + Date.now();
+      });
+            }else if (code === 400){
+              this.$message.error('验证码错误');
+              this.loading = false;
+              // 更新验证码图片URL
+      this.captchaImageUrl = '';
+      this.$nextTick(() => {
+        this.captchaImageUrl = 'http://localhost:28080/captcha?' + Date.now();
+      });
+            }
+            else if (code === 50007){
+              this.$message.error('用户名或密码错误');
+              this.loading = false;
+              // 更新验证码图片URL
+      this.captchaImageUrl = '';
+      this.$nextTick(() => {
+        this.captchaImageUrl = 'http://localhost:28080/captcha?' + Date.now();
+      });
+            }
             })
             .catch(() => {
-              // 登录失败，显示错误提示
-              this.$message.error('用户名或密码错误');
+              this.$message.error('未知错误');
               this.loading = false;
             });
         }
       });
     },
-
-    loadCaptchaImage() {
-      getCaptcha()
-        .then(response => {
-          const imgUrl = URL.createObjectURL(response.data);
-          this.captchaUrl = imgUrl;
-           // 获取响应头中的 "SessionID" 字段并创建一个名为 "SessionID" 的 cookie
-           const SessionID = response.headers['SessionID'];
-           document.cookie = `SessionID=${SessionID}; path=/`;
-        })
-        .catch(error => {
-          console.error(error);
-        });
+    refreshCaptcha() {
+      // 更新验证码图片URL
+      this.captchaImageUrl = '';
+      this.$nextTick(() => {
+        this.captchaImageUrl = 'http://localhost:28080/captcha?' + Date.now();
+      });
     }
-  },
 
-  created() {
-    this.loadCaptchaImage();
   }
 }
-  </script>
+</script>
+
   
   <style lang="scss">
   .button-container {
