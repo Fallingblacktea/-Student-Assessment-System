@@ -26,7 +26,7 @@
             </el-table-column>
             <el-table-column prop="time" label="时间">
               <template #default="scope">
-                <el-input v-model="scope.row.time" placeholder="格式为YY-MM"></el-input>
+                <el-input v-model="scope.row.time" placeholder="格式为YYYY-MM"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="location" label="地点">
@@ -57,7 +57,7 @@
           <el-table :data="form.studentService" style="width: 100%">
             <el-table-column prop="startTime" label="起始时间">
               <template #default="scope">
-                <el-input v-model="scope.row.startTime" placeholder="格式为YY-MM"></el-input>
+                <el-input v-model="scope.row.startTime" placeholder="格式为YYYY-MM"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="positionName" label="服务岗位名称">
