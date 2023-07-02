@@ -16,7 +16,6 @@ import LoginView from './User/LoginView.vue'
 import RegisterView from './User/RegisterView.vue'
 import store from './store';
 import {validateAccessToken} from './api/tokenValid'
-console.log(SystemRouter[0].children);
 const router = createRouter({
  history: createWebHashHistory(),
  routes: [
@@ -34,7 +33,6 @@ const router = createRouter({
   ...SystemRouter
 ]
 })
-console.log(SystemRouter[0].children);
 const app = createApp(App)
 app.use(router)
 app.use(ElementPlus)
