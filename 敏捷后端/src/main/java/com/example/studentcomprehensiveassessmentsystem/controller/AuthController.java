@@ -7,6 +7,7 @@ import com.example.studentcomprehensiveassessmentsystem.controller.VO.LoginReqVO
 import com.example.studentcomprehensiveassessmentsystem.controller.VO.LoginRespVO;
 import com.example.studentcomprehensiveassessmentsystem.mapper.DO.LoginReqDO;
 import com.example.studentcomprehensiveassessmentsystem.service.LoginService;
+import com.example.studentcomprehensiveassessmentsystem.service.RedisService;
 import com.example.studentcomprehensiveassessmentsystem.utils.JwtTokenUtil;
 
 import io.jsonwebtoken.Claims;
@@ -18,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -30,15 +32,28 @@ public class AuthController {
     private LoginService loginService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private RedisService redisService;
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
     public CommonResult<LoginRespVO> hello(HttpServletRequest request, @RequestParam("captchaText") String captchaText, @RequestBody @Valid LoginReqVO loginReqVO) {
         System.out.println(captchaText);
         LoginReqDO loginReqDO = loginService.service(loginReqVO);
-        String storedCaptcha = (String) request.getSession().getAttribute("captcha");
+        String SessionID=null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("SessionID")) {
+                    // 获取名为"SessionID"的Cookie的值
+                    SessionID = cookie.getValue();
+                }
+            }
+        }
+
+        String storedCaptcha = redisService.getValue(SessionID);
         System.out.println(storedCaptcha);
-        request.getSession().removeAttribute("captcha"); // 删除会话中的验证码
+        redisService.deleteValue(SessionID); // 删除会话中的验证码
         if (!captchaText.equalsIgnoreCase(storedCaptcha)) {
             // 验证码错误，显示错误消息
             return CommonResult.error(400,"验证码错误");
