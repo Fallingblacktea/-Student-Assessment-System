@@ -6,7 +6,6 @@
 
 <script>
 import { exportdata } from '../api/exportData';
-import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 export default {
   methods: {
