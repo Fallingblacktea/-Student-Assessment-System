@@ -44,9 +44,6 @@ import {setToken} from '../utils/auth'
         captchaImageUrl: '' // 添加验证码图片地址属性
       }
     },
-    created() {
-    this.refreshCaptcha() // 在组件创建时获取验证码图片地址
-  },
     methods: {
       do_login() {
         this.$refs.form.validate(valid => {
