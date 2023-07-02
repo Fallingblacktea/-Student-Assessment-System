@@ -134,10 +134,26 @@
           </el-table>
           <el-button @click="addPracticeItem">添加</el-button>
         </el-form-item>
-
         <el-form-item>
-          <el-button type="primary" @click="submitForm">提交</el-button>
+          <el-button type="primary" @click="submitForm">提交以上（1-5项）信息</el-button>
+          请勿忘记提交证明材料！
         </el-form-item>
+        <div class="form-item-wrapper">
+            <el-form-item label="6. 证明材料上传">
+            <el-upload
+      class="upload-demo"
+      action="http://localhost:28080/upload"
+      :before-upload="beforeUpload"
+      :on-success="onUploadSuccess"
+      :on-error="onUploadError"
+      :limit="1"
+      :file-list="fileList"
+      :auto-upload="false"
+    >
+      <el-button type="primary">点击上传</el-button>
+    </el-upload>
+          </el-form-item>
+          </div>
       </el-form>
     </el-card>
   </div>
@@ -149,6 +165,7 @@ import { onlineFillingSubmit } from '/src/api/submit.js'
 export default {
   data() {
     return {
+      fileList: [],
       form: {
         personalSummary: "",
         GPA: null,
@@ -159,6 +176,31 @@ export default {
     };
   },
   methods: {
+    beforeUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG && !isPNG) {
+        this.$message.error('只能上传 JPG/PNG 格式的图片');
+        return false;
+      }
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 2MB');
+        return false;
+      }
+
+      this.fileList.push(file);
+      return false; // 阻止自动上传
+    },
+    onUploadSuccess(response, file) {
+      this.$message.success('文件上传成功');
+      // 处理上传成功的逻辑
+    },
+    onUploadError(error, file) {
+      this.$message.error('文件上传失败');
+      // 处理上传失败的逻辑
+    },
     addResearchItem() {
       this.form.researchStatus.push({});
     },
@@ -200,4 +242,7 @@ export default {
   font-weight: bold;
   margin-bottom: 10px;
 }
+.form-item-wrapper {
+    margin-top: 20px; /* 这里可以调整平移的距离 */
+  }
 </style>
