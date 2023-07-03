@@ -6,9 +6,9 @@
       <el-table-column label="姓名" prop="name"></el-table-column>
       <el-table-column label="学号" prop="studentID"></el-table-column>
       <el-table-column label="起始时间" prop="startTime"></el-table-column>
-      <el-table-column label="服务岗位名称" prop="position"></el-table-column>
-      <el-table-column label="职务" prop="duty"></el-table-column>
-      <el-table-column label="考核级别" prop="assessment"></el-table-column>
+      <el-table-column label="服务岗位名称" prop="positionName"></el-table-column>
+      <el-table-column label="职务" prop="positionTitle"></el-table-column>
+      <el-table-column label="考核级别" prop="assessmentLevel"></el-table-column>
     </el-table>
     <el-input
       v-model="score"
@@ -33,9 +33,9 @@ export default {
           name: '',
           studentID: '',
           startTime: '',
-          position: '',
-          duty: '',
-          assessment: ''
+          positionName: '',
+          positionTitle: '',
+          assessmentLevel: ''
         }
       ],
       score: ''

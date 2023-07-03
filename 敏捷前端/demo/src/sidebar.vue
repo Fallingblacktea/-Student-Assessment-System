@@ -151,15 +151,40 @@
           const menulist = response.data.map(i => runningmenu[i]);
           switch(response.data[0]){
             case 0 :
-              menulist.push(runningmenu[3]);
+              menulist.push(runningmenu[3]);//成绩导出
               break;
             case 3 :
-            menulist.shift();
-            menulist.push(runningmenu[9]);
-            menulist.push(runningmenu[10]);
+            menulist.shift();//移除runningmenu[3]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[5]);//个人总结评委菜单
+              break;
+            case 4 :
+            menulist.shift();//移除runningmenu[4]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[6]);//志愿服务评委菜单
+              break;
+            case 5 :
+            menulist.shift();//移除runningmenu[5]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[7]);//学生成绩评委菜单
+              break;
+            case 6 :
+            menulist.shift();//移除runningmenu[6]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[8]);//科研情况评委菜单
+              break;  
+            case 7 :
+            menulist.shift();//移除runningmenu[7]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[9]);//学生服务评委菜单
+              break;
+            case 8 :
+            menulist.shift();//移除runningmenu[4]
+            menulist.push(runningmenu[4]);//评委字段
+            menulist.push(runningmenu[10]);//社会实践评委菜单
               break;
             default:
-              menulist.shift();
+            menulist.shift();
             menulist.unshift(runningmenu[11]);
             menulist.push(runningmenu[12]);
 

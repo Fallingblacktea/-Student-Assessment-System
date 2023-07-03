@@ -5,11 +5,11 @@
       <el-table-column type="index" label="序号"></el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
       <el-table-column label="学号" prop="studentID"></el-table-column>
-      <el-table-column label="发起单位" prop="organization"></el-table-column>
+      <el-table-column label="发起单位" prop="initiatingOrganization"></el-table-column>
       <el-table-column label="地点" prop="location"></el-table-column>
       <el-table-column label="天数" prop="days"></el-table-column>
       <el-table-column label="团队人数" prop="teamSize"></el-table-column>
-      <el-table-column label="团内职务" prop="teamRole"></el-table-column>
+      <el-table-column label="团内职务" prop="teamPosition"></el-table-column>
       <el-table-column label="是否线上" prop="online"></el-table-column>
       <el-table-column label="是否获得奖励" prop="hasAward"></el-table-column>
       <el-table-column label="奖励名称" prop="awardName"></el-table-column>
@@ -36,11 +36,11 @@ export default {
         {
           name: '',
           studentID: '',
-          organization: '',
+          initiatingOrganization: '',
           location: '',
           days: null,
           teamSize: null,
-          teamRole: '',
+          teamPosition: '',
           online: '',
           hasAward: '',
           awardName: ''
