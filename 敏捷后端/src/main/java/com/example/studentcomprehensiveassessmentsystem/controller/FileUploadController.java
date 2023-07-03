@@ -28,6 +28,8 @@ public class FileUploadController {
     @PostMapping("/upload")
     @ResponseBody
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        String uploadDirectory = System.getProperty("user.dir") + File.separator + uploadPath;
+
         if (file == null || file.isEmpty()) {
             return "上传文件不能为空";
         }
@@ -51,7 +53,7 @@ public class FileUploadController {
         try {
             String fileName = generateUniqueFileName(file.getOriginalFilename());
 
-            String filePath = uploadPath + File.separator + fileName;
+            String filePath = uploadDirectory + File.separator + fileName;
             File dest = new File(filePath);
             file.transferTo(dest);
 
