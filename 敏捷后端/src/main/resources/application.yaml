@@ -25,4 +25,8 @@ spring:
   # session 配置
   session:
     store-type: redis
+    cookie:
+      domain: localhost
+      secure: true
+      same-site: none
 
