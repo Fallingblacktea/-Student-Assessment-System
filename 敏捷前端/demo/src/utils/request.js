@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 import {getAccessToken} from '../utils/auth'
-axios.defaults.withCredentials=true
-//允许其携带cookie
+
+
 const service = axios.create({
   baseURL: 'http://localhost:28080/',
-  timeout: 5000
+  timeout: 5000,
+  withCredentials:true//允许其携带cookie
 });
-
 service.interceptors.request.use(
   config => {
     // 在请求发送之前对请求数据进行处理

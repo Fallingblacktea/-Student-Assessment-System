@@ -139,7 +139,7 @@
           请勿忘记提交证明材料！
         </el-form-item>
         <div class="form-item-wrapper">
-            <el-form-item label="6. 证明材料上传">
+            <el-form-item label="6. 证明材料上传(请上传jpeg和png格式的文件)">
               <input type="file" @change="handleFileUpload">
     <button @click="submitFile">提交</button>
           </el-form-item>
@@ -172,9 +172,19 @@ export default {
     },
     async submitFile() {
       if (this.file) {
+        const allowedTypes = ['image/jpeg', 'image/png']; // 允许的文件类型
+        const maxSize = 2 * 1024 * 1024; // 最大文件大小为 2MB
+        console.log(this.file.type);
+    if (!allowedTypes.includes(this.file.type)) {
+      ElMessage.error('只能上传 JPEG/PNG 格式的图片');
+      return; // 如果文件类型不正确，中断上传操作
+    }
+    if (this.file.size > maxSize) {
+      ElMessage.error('上传文件大小不能超过2MB');
+      return; // 如果文件大小超过限制，中断上传操作
+    }
         const formData = new FormData();
         formData.append('file', this.file); // 将文件添加到FormData对象中，'file'是服务器端接收文件的字段名
-        console.log(formData);
         try {
           const response = await submitfile(formData); // 使用submit函数发送FormData对象
           ElMessage.success('上传成功'); // 处理上传成功后的逻辑

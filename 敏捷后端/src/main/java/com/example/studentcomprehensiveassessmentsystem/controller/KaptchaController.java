@@ -42,7 +42,6 @@ public class KaptchaController {
         cookie.setMaxAge(60);
         // 将Cookie添加到响应中
         response.addCookie(cookie);
-        response.setHeader("set-cookie", "SessionID=" + request.getSession().getId() + "; Path=/");
         // 将验证码图片写入响应
         response.setContentType("image/png");
         try (OutputStream outputStream = response.getOutputStream()) {
