@@ -1,8 +1,8 @@
 server:
   port: 28080
 file:
-  upload-path: D:\agile\Student-Assessment-System\image
-  allowed-types: jpg,png
+  upload-path: src/main/resources/public/image
+  allowed-types: jpeg,png
   max-size: 10485760   # 10MB
 jwt:
   secret: gx4SN/4gh6QPvLfVWCW8Aoo4l2n66d2338IwXyu1koDT1W94XS35OZJPYkA2IIMMgmlz96LCHSNc8jLYuzwB1IreKOZz2TZhsWODfjHAS9bYlduniCUSuSPZ5/OP15O63fn1kN1N5w64frpyWcWbTtiCgLMkJpnfjmqFMAr7fgcOGyt2rmunvFYni9T78Q4fn/0gpx3qm8zXw3oBbFb1Ge9Wnh1UCSapXd/EzLau3iaXqp9f+8FHmSCo9vbEaRSRMPHdcpnB4WKHKySE/BCNSsWM+kHmHyrAbvKErPCz2XXMnIalUoAtquq03LnmYjrBHyI230VcYEVzGmzLOTsSJw==
@@ -11,6 +11,10 @@ jwt:
   refresh_token:
     expiration: 604800
 spring:
+  # 静态资源配置
+  web:
+    resources:
+      static-locations: classpath:/public/image/
   # Mysql 配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/敏捷开发
