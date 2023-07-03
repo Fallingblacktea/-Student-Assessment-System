@@ -48,7 +48,6 @@ public class KaptchaController {
 
         // Response to the client
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
         // 将验证码图片写入响应
         response.setContentType("image/png");
         try (OutputStream outputStream = response.getOutputStream()) {
