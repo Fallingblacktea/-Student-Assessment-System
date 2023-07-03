@@ -140,18 +140,8 @@
         </el-form-item>
         <div class="form-item-wrapper">
             <el-form-item label="6. 证明材料上传">
-            <el-upload
-      class="upload-demo"
-      action="http://localhost:28080/upload"
-      :before-upload="beforeUpload"
-      :on-success="onUploadSuccess"
-      :on-error="onUploadError"
-      :limit="1"
-      :file-list="fileList"
-      :auto-upload="false"
-    >
-      <el-button type="primary">点击上传</el-button>
-    </el-upload>
+              <input type="file" @change="handleFileUpload">
+    <button @click="submitFile">提交</button>
           </el-form-item>
           </div>
       </el-form>
@@ -161,11 +151,11 @@
 
 <script>
 import { ElMessage } from 'element-plus';
-import { onlineFillingSubmit } from '/src/api/submit.js'
+import { submitfile,onlineFillingSubmit } from '/src/api/submit.js'
 export default {
   data() {
     return {
-      fileList: [],
+      file:null,
       form: {
         personalSummary: "",
         GPA: null,
@@ -175,31 +165,25 @@ export default {
       }
     };
   },
+
   methods: {
-    beforeUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isPNG = file.type === 'image/png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG && !isPNG) {
-        this.$message.error('只能上传 JPG/PNG 格式的图片');
-        return false;
-      }
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB');
-        return false;
-      }
-
-      this.fileList.push(file);
-      return false; // 阻止自动上传
+    handleFileUpload(event) {
+      this.file = event.target.files[0];
     },
-    onUploadSuccess(response, file) {
-      this.$message.success('文件上传成功');
-      // 处理上传成功的逻辑
-    },
-    onUploadError(error, file) {
-      this.$message.error('文件上传失败');
-      // 处理上传失败的逻辑
+    async submitFile() {
+      if (this.file) {
+        const formData = new FormData();
+        formData.append('file', this.file); // 将文件添加到FormData对象中，'file'是服务器端接收文件的字段名
+        console.log(formData);
+        try {
+          const response = await submitfile(formData); // 使用submit函数发送FormData对象
+          ElMessage.success('上传成功'); // 处理上传成功后的逻辑
+        } catch (error) {
+          ElMessage.error('上传失败'); // 处理上传失败的逻辑
+        }
+        // 可以使用 FormData 或其他方式将文件发送到服务器
+        console.log("提交文件:", this.file);
+      }
     },
     addResearchItem() {
       this.form.researchStatus.push({});
