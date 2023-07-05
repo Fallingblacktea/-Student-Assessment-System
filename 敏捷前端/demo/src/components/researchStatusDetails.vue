@@ -5,7 +5,7 @@
       <el-table-column type="index" label="序号" ></el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
       <el-table-column label="学号" prop="studentID"></el-table-column>
-      <el-table-column label="名次" prop="rank"></el-table-column>
+      <el-table-column label="名次" prop="ranking"></el-table-column>
       <el-table-column label="时间" prop="time"></el-table-column>
       <el-table-column label="地点" prop="location"></el-table-column>
       <el-table-column label="奖项" prop="award"></el-table-column>
@@ -33,7 +33,7 @@ export default {
         {
           name: '',
           studentID: '',
-          rank: null,
+          ranking: null,
           time: '',
           location: '',
           award: '',
